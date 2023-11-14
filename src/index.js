@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import axios from "axios"
 
 import "./styles.css";
+
+const API_KEY = process.env.REACT_APP_API_KEY
 
 const App = () => (
   <div>
@@ -20,6 +23,13 @@ const App = () => (
                 hover: {
                   fill: "#F53"
                 }
+              }}
+              onClick={() => {
+                axios.get("https://newsapi.org/v2/top-headlines/sources?country=" + geo.id, {
+                  headers: {
+                    "X-Api-Key": API_KEY
+                  }
+                }).then((res) => console.log(res.data.sources))
               }}
             />
           ))
